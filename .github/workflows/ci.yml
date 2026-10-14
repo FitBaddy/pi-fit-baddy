@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pi:
+    name: Raspberry Pi (pytest в режиме mock)
+    runs-on: ubuntu-latest
+    env:
+      SENSOR_MODE: mock
+      GPIOZERO_PIN_FACTORY: mock
+    steps:
+      - uses: actions/checkout@v4
+      - name: Есть ли код узла
+        id: code
+        run: |
+          if [ -f requirements.txt ]; then echo "present=true" >> "$GITHUB_OUTPUT"
+          else echo "present=false" >> "$GITHUB_OUTPUT"; echo "Код узла ещё не добавлен — проверки пропущены"; fi
+      - uses: actions/setup-python@v5
+        if: steps.code.outputs.present == 'true'
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Установить зависимости (без smbus2 и RPi.GPIO)
+        if: steps.code.outputs.present == 'true'
+        run: pip install -r requirements.txt
+      - name: Тесты без железа
+        if: steps.code.outputs.present == 'true'
+        run: pytest -q
