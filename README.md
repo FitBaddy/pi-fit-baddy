@@ -2,7 +2,7 @@
 
 Узел датчиков FitQuest: Raspberry Pi с акселерометром **MPU6050** (шаги) и пульсометром **MAX30102** (пульс) на шине I2C. Сервис считает шаги и пульс, отдаёт их по локальному API `/device/*` и публикует в backend FitQuest как `TelemetryDTO` с `source=raspberry_pi`.
 
-> **Статус: в разработке.** Код ещё не написан; этот README описывает целевое устройство модуля по требованиям [`docs/pi.md`](docs/pi.md). Задачи — [доска FitBaddy](https://github.com/orgs/FitBaddy/projects/1), префикс `PI-`.
+> **Статус: код готов, проверен в эмуляции (`SENSOR_MODE=mock`); на реальной плате не проверен** — см. раздел «Проверить на реальной плате». Требования — [`docs/pi.md`](docs/pi.md). Задачи — [доска FitBaddy](https://github.com/orgs/FitBaddy/projects/1), префикс `PI-`.
 >
 > Свой `requirements.txt`, тесты и CI.
 
